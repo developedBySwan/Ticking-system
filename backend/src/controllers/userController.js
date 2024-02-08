@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { isNumber } from "../helpers/helper.js";
 
 /**
  * @desc Register user
@@ -13,12 +14,6 @@ import jwt from "jsonwebtoken";
 const registerUser = asyncHandler(async (req, res) => {
    const { username, email, phone, password } = req.body;
 
-   if (!username || !email || !password || !phone) {
-      return res
-         .status(400)
-         .json({ message: "All Fields are required" });
-   }
-
    const checkUser = await User.findOne({
             $or: [
                 { email: email },
@@ -27,7 +22,7 @@ const registerUser = asyncHandler(async (req, res) => {
    });
    
    if (checkUser) {
-      return res.status(400).json({message : "User Is Alreay Exists"});
+      return res.status(400).json({message : "User Is Already Exists"});
    }
 
    const user = await User.create({
@@ -53,7 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
                         id: user.id,
                      },
                   },
-                  process.env.JWT_TOKEN_SECERT
+                  process.env.JWT_TOKEN_SECRET
                ),
          }
       });

@@ -78,6 +78,35 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @des update user data
+ * 
+ * @route PUT api/user/update
+ * 
+ * @access private
+ * 
+ */
+const updateUser = asyncHandler(async (req, res) => {
+   const user = await User.findById(req.params.id);
+
+   if (!user) {
+      response(res,"User Not Found",403)
+   }
+   
+   const { username, email, phone, password } = req.body;
+
+   await User.findByIdAndUpdate(
+                     req.params.id,
+                     {
+                        username,
+                        email,
+                        phone,
+                        password: await bcrypt.hash(password, 10),
+      });
+   
+   response(res, "Updated Successfully", 200);
+})
+
+/**
  * @des to generate JWT token
  * 
  * @param { User } user 
@@ -99,4 +128,5 @@ function generateJWTToken(user) {
 export {
    registerUser,
    loginUser,
+   updateUser
 }

@@ -6,13 +6,14 @@ import userLoginValidation from '../../middlewares/User/userLoginValidation.js';
 import {
     registerUser,
     loginUser,
+    updateUser
 } from "../../controllers/userController.js";
 
 const userRouter = express.Router();
 
 userRouter.post('/register',userStoreValidation,registerUser);
 
-userRouter.put('/update');
+userRouter.put("/update/:id",userStoreValidation,updateUser);
 
 userRouter.post('/login',userLoginValidation,loginUser);
 

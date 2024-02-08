@@ -40,16 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
             username: user.username,
             email: user.email,
             phone: user.phone,
-            token: jwt.sign(
-                  {
-                     user: {
-                        username: user.username,
-                        phone: user.phone,
-                        id: user.id,
-                     },
-                  },
-                  process.env.JWT_TOKEN_SECRET
-               ),
+            token: generateJWTToken(user),
          }
       });
   } else {
@@ -67,26 +58,43 @@ const registerUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
    const { phone, password } = req.body;
-
-   if (!password || !phone) {
-      res.status(400);
-      throw new Error("All fields are required!");
-   }
    
-   const user = User.findOne({
-      phone: phone,
-      password: await bcrypt.compare(password, user.password)
-   });
+   const user = User.findOne({ phone });
 
-   if (user) {
+   if (user && await bcrypt.compare(password, user.password)) {
       res.status(200).json({
-
+         message: "User Login Successfully",
+         user: {
+            _id: user.id,
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            token: generateJWTToken(user),
+         }
       })
    } else {
-      res.status(401);
-      throw new Error("Invalid Account");
+      response(res, "User Not Found", 422);
    }
 });
+
+/**
+ * @des to generate JWT token
+ * 
+ * @param { User } user 
+ * @returns string JWT token
+ */
+function generateJWTToken(user) {
+   return jwt.sign(
+      {
+         user: {
+            username: user.username,
+            phone: user.phone,
+            id: user.id,
+         },
+      },
+      process.env.JWT_TOKEN_SECRET
+   );
+}
 
 export {
    registerUser,

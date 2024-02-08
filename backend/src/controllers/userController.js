@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { isNumber } from "../helpers/helper.js";
+import { response } from "../helpers/helper.js";
 
 /**
  * @desc Register user
@@ -58,20 +58,20 @@ const registerUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
    const { phone, password } = req.body;
-   
-   const user = User.findOne({ phone });
 
-   if (user && await bcrypt.compare(password, user.password)) {
-      res.status(200).json({
-         message: "User Login Successfully",
-         user: {
-            _id: user.id,
-            username: user.username,
-            email: user.email,
-            phone: user.phone,
-            token: generateJWTToken(user),
-         }
-      })
+   const user = await User.findOne({ phone: phone }).exec();
+   
+   if (user && bcrypt.compareSync(password, user.password)) {
+         res.status(200).json({
+            message: "User Login Successfully",
+            user: {
+               _id: user.id,
+               username: user.username,
+               email: user.email,
+               phone: user.phone,
+               token: generateJWTToken(user),
+            }
+         })
    } else {
       response(res, "User Not Found", 422);
    }

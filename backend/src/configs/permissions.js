@@ -7,7 +7,7 @@ export default [
     "ticket-store",
     "ticket-update",
     "ticket-delete",
-    'ticket-approve',
+    'ticket-adjust',
     "role-list",
     "role-store",
     "role-update",

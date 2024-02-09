@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Ticket from "../models/Ticket.js";
 import { response } from "../helpers/helper.js";
+import Role from "../models/Role.js";
 
 /**
  * @des Ticket list
@@ -24,7 +25,7 @@ const ticketList = asyncHandler(async (req, res) => {
     const tickets = await Ticket
         .find(filter)
         .where({
-            'approved_step' : req.user.role.level,
+            'approved_step' : req.user.role.level - 1,
         })
         .skip((page - 1) * limit)
         .limit(limit);
@@ -99,9 +100,40 @@ const ticketDelete = asyncHandler(async (req, res) => {
     return res.status(200).json({ "message": "Ticket Deleted Successfully" });
 })
 
+const ticketAdjust = asyncHandler(async (req, res) => {
+    const ticketId = req.params.id;
+
+    const ticket = await Ticket.findById(ticketId)
+                // .where({
+                //     'approved_step' : req.user.role.level - 1,
+                // })
+                .exec();
+
+    if (!ticket) {
+        return response(res, "Ticket not found", 404);
+    }
+    
+    const { is_approve } = req.body;
+
+    if (is_approve) {
+        Ticket.findByIdAndUpdate(
+            ticketId,
+            {
+                'approved_step': req.user.role.level,
+                'is_finished' : req.user.role.level === await Role.findOne().sort({ level: -1 }).level ? true : false,
+            }
+        )
+        response(res, "Adjust Successfully", 200);
+
+    } else {
+        response(res, "Is Approve Field is required", 422);
+    }
+});
+
 export {
     ticketList,
     ticketStore,
     ticketUpdate,
     ticketDelete,
+    ticketAdjust
 }

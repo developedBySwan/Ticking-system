@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { ticketDelete, ticketList, ticketStore, ticketUpdate } from '../../controllers/ticketController.js';
+import { ticketDelete, ticketList, ticketStore, ticketUpdate, ticketAdjust } from '../../controllers/ticketController.js';
 import ticketStoreValidation from "../../middlewares/Ticket/ticketStoreValidation.js";
 import authorize from "../../middlewares/permissionHandler.js";
 import validateTokenHandler from '../../middlewares/validateTokenHandler.js';
@@ -37,6 +37,13 @@ ticketRouter
         '/delete/:id',
         authorize('ticket-delete'),
         ticketDelete,
+)
+
+ticketRouter
+    .put(
+        '/adjust/:id',
+        // authorize('ticket-adjust'),
+        ticketAdjust
     )
 
 export default ticketRouter;

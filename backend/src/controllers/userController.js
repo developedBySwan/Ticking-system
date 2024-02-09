@@ -124,6 +124,13 @@ const updateUser = asyncHandler(async (req, res) => {
    return response(res, "Updated Successfully", 200);
 })
 
+/**
+ * @des user list 
+ * 
+ * @route GET /api/user-list/
+ * 
+ * @access private
+ */
 const userList = asyncHandler(async (req, res) => {
    const page = parseInt(req.query.page) || 1;
    const limit = parseInt(req.query.limit) || 10;
@@ -151,7 +158,7 @@ const userList = asyncHandler(async (req, res) => {
          }
       })
       
-      res
+      return res
          .status(200)
          .json({
             data: transformedUsers,

@@ -6,7 +6,8 @@ import {
     roleList,
     roleStore,
     roleUpdate,
-    roleDelete
+    roleDelete,
+    permissionList
 } from "../../controllers/roleController.js";
 import roleStoreValidation from '../../middlewares/Role/roleStoreValidation.js';
 
@@ -38,6 +39,12 @@ roleRouter
         .delete(
             '/delete/:id',
             roleDelete
+)
+        
+roleRouter
+    .get(
+        '/permission-list',
+        permissionList,
         )
     
 export default roleRouter;

@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Role from "../models/Role.js";
 import { response } from "../helpers/helper.js";
+import permissions from "../configs/permissions.js";
 
 /**
  * @des list response for role
@@ -96,9 +97,23 @@ const roleDelete = asyncHandler(async (req, res) => {
     response(res, "Role Deleted", 200);
 })
 
+/**
+ * @des permission list
+ * 
+ * @route GET api/role/permission-list
+ * 
+ */
+const permissionList = asyncHandler(async (req, res) => {
+    return res.status(200)
+        .json({
+            data: permissions,
+        })
+});
+
 export {
     roleList,
     roleStore,
     roleUpdate,
     roleDelete,
+    permissionList,
 }

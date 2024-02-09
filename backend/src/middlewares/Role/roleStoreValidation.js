@@ -1,5 +1,6 @@
 import { isNumber, response } from "../../helpers/helper.js";
 import Role from "../../models/Role.js";
+import * as permissionList from "../../configs/permissions.js";
 
 async function checkRoleExistence(res, field, value) {
     const role = await Role.findOne({ [field]: value }).exec();
@@ -7,7 +8,7 @@ async function checkRoleExistence(res, field, value) {
 }
 
 export default async function roleStoreValidation(req, res, next) {
-   const { title, description, level } = req.body;
+   const { title, description, level, permissions } = req.body;
 
     if (!title) {
         return response(res,"Title filed is required",400);
@@ -15,6 +16,16 @@ export default async function roleStoreValidation(req, res, next) {
 
     if (!level || level <= 0 || !isNumber(level)) {
         return response(res, "Level should be a positive number", 400);
+    }
+
+    if (!permissions) {
+        return response(res, "Permission Field Should Be include", 400);
+    } else {
+        const filteredArray = permissions.filter(item => !permissionList.default.includes(item));
+
+        if (filteredArray.length > 0) {
+            return response(res, "Permission key doesn't exists", 422);
+        }
     }
 
     if (req.method === 'POST') {

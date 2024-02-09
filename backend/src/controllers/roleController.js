@@ -63,6 +63,33 @@ const roleStore = asyncHandler(async (req, res) => {
 })
 
 /**
+ * @des role detail
+ * 
+ * @route GET api/role/detail/:id
+ * 
+ * @access private
+ */
+const roleDetail = asyncHandler(async (req,res) => {
+    const role = await Role.findById(req.params.id);
+
+    if (!role) {
+        return response(res,"Role Not Found",400);
+    }
+    
+    return res
+        .status(200)
+        .json({
+            data: {
+                id: role.id,
+                title: role.title,
+                description: role.description,
+                level: role.level,
+                permissions: role.permissions,
+            },
+        })
+})
+
+/**
  * @des Role Update
  * 
  * @route PUT api/role/update/:id
@@ -72,7 +99,7 @@ const roleStore = asyncHandler(async (req, res) => {
 const roleUpdate = asyncHandler(async (req, res) => {
     await Role.findByIdAndUpdate(
         req.params.id,
-        req.body,    
+        req.body,
     )
 
     response(res, "Update Successfully", 200);
@@ -116,4 +143,5 @@ export {
     roleUpdate,
     roleDelete,
     permissionList,
+    roleDetail,
 }

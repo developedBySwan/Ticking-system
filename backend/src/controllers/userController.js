@@ -1,7 +1,8 @@
-import User from "../models/User.js";
-import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler";
+
+import User from "../models/User.js";
 import { response } from "../helpers/helper.js";
 
 /**
@@ -103,7 +104,40 @@ const updateUser = asyncHandler(async (req, res) => {
                         password: await bcrypt.hash(password, 10),
       });
    
-   response(res, "Updated Successfully", 200);
+   return response(res, "Updated Successfully", 200);
+})
+
+const userList = asyncHandler(async (req, res) => {
+   const page = parseInt(req.query.page) || 1;
+   const limit = parseInt(req.query.limit) || 10;
+
+   try {
+      const users = await User.find()
+         .skip((page - 1) * limit)
+         .limit(limit);
+      
+      const userCount = await User.countDocuments();
+      
+      const transformedUsers = await users.map(user => {
+         return {
+            id: user.id,
+            username: user.username,
+            mail: user.email,
+            phone: user.phone,
+         }
+      })
+      
+      res
+         .status(200)
+         .json({
+            data: transformedUsers,
+            currentPage: page,
+            perPage: limit,
+            total: userCount,
+         });
+   } catch (err) {
+      response(res, "Internal Server Error", 500);
+   }
 })
 
 /**
@@ -128,5 +162,6 @@ function generateJWTToken(user) {
 export {
    registerUser,
    loginUser,
-   updateUser
+   updateUser,
+   userList
 }

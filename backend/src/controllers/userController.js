@@ -118,7 +118,7 @@ const userList = asyncHandler(async (req, res) => {
       
       const userCount = await User.countDocuments();
       
-      const transformedUsers = await users.map(user => {
+      const transformedUsers = users.map(user => {
          return {
             id: user.id,
             username: user.username,

@@ -41,6 +41,11 @@ const registerUser = asyncHandler(async (req, res) => {
             username: user.username,
             email: user.email,
             phone: user.phone,
+            role: {
+                  _id: user.role_id._id,
+                  title: user.role_id.title,
+                  level: user.role_id.level,
+               },
             token: generateJWTToken(user),
          }
       });
@@ -60,7 +65,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
    const { phone, password } = req.body;
 
-   const user = await User.findOne({ phone: phone }).exec();
+   const user = await User.findOne({ phone: phone }).populate('role_id').exec();
    
    if (user && bcrypt.compareSync(password, user.password)) {
          res.status(200).json({
@@ -70,6 +75,11 @@ const loginUser = asyncHandler(async (req, res) => {
                username: user.username,
                email: user.email,
                phone: user.phone,
+               role: {
+                  _id: user.role_id._id,
+                  title: user.role_id.title,
+                  level: user.role_id.level,
+               },
                token: generateJWTToken(user),
             }
          })

@@ -13,12 +13,12 @@ export default asyncHandler(async (req, res, next) => {
         token = authHeader.split(" ")[1];
 
         if (!token) {
-            return response(res, "User is not authorized 2", 401);
+            return response(res, "User is not authorized", 401);
         }
 
         return jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, decoded) => {
             if (err) {
-                return response(res, "User is not authorized 3", 401);
+                return response(res, "User is not authorized", 401);
             }
 
             req.user = decoded.user;
@@ -27,5 +27,5 @@ export default asyncHandler(async (req, res, next) => {
         });
     }
 
-    return response(res, "User is not authorized 1", 401);
+    return response(res, "User is not authorized", 401);
 })

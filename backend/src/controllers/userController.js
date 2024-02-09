@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 
 import User from "../models/User.js";
 import { response } from "../helpers/helper.js";
+import Role from "../models/Role.js";
 
 /**
  * @desc Register user
@@ -49,9 +50,8 @@ const registerUser = asyncHandler(async (req, res) => {
             token: generateJWTToken(user),
          }
       });
-  } else {
-      res.status(400);
-      throw new Error("user is already exists");
+   } else {
+      return response(res, "User is already exists", 400);
    }
 });
 
@@ -100,10 +100,16 @@ const updateUser = asyncHandler(async (req, res) => {
    const user = await User.findById(req.params.id);
 
    if (!user) {
-      response(res,"User Not Found",403)
+      return response(res,"User Not Found",403)
    }
    
-   const { username, email, phone, password } = req.body;
+   const { username, email, phone, password, role_id } = req.body;
+
+   const role = await Role.findById(role_id);
+
+   if (!role) {
+      return response(res,"Role Not Found",403)
+   }
 
    await User.findByIdAndUpdate(
                      req.params.id,
@@ -112,7 +118,8 @@ const updateUser = asyncHandler(async (req, res) => {
                         email,
                         phone,
                         password: await bcrypt.hash(password, 10),
-      });
+                        role_id : role_id,
+                     });
    
    return response(res, "Updated Successfully", 200);
 })
@@ -122,7 +129,9 @@ const userList = asyncHandler(async (req, res) => {
    const limit = parseInt(req.query.limit) || 10;
 
    try {
-      const users = await User.find()
+      const users = await User
+         .find()
+         .populate('role_id')
          .skip((page - 1) * limit)
          .limit(limit);
       
@@ -130,10 +139,15 @@ const userList = asyncHandler(async (req, res) => {
       
       const transformedUsers = users.map(user => {
          return {
-            id: user.id,
+            _id: user.id,
             username: user.username,
             mail: user.email,
             phone: user.phone,
+            role: {
+               _id: user.role_id?._id,
+               title: user.role_id?.title,
+               level: user.role_id?.level,
+            }
          }
       })
       
@@ -163,6 +177,11 @@ function generateJWTToken(user) {
             username: user.username,
             phone: user.phone,
             id: user.id,
+            role: {
+               _id: user.role_id._id,
+               title: user.role_id.title,
+               level: user.role_id.level,
+            }
          },
       },
       process.env.JWT_TOKEN_SECRET

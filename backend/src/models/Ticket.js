@@ -6,7 +6,7 @@ const ticketSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: false },
     is_finished: { type: Boolean, required: true, default: false },
-    approved_step: { type: String }
+    approved_step: { type: Number }
 })
 
 const Ticket = mongoose.model('Ticket', ticketSchema);

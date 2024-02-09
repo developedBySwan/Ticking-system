@@ -2,7 +2,7 @@ import express from "express";
 import 'dotenv/config';
 import cors from "cors";
 import db from "./database/db.js";
-import ticketRouter from "./routes/api/ticket.js";
+import ticketRouter from "./routes/api/ticketRoutes.js";
 import userRouter from "./routes/api/userRoutes.js";
 import roleRouter from "./routes/api/roleRoutes.js";
 

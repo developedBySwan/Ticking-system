@@ -79,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
                   _id: user.role_id._id,
                   title: user.role_id.title,
                   level: user.role_id.level,
+                  permissions: user.role_id.permissions,
                },
                token: generateJWTToken(user),
             }
@@ -188,6 +189,7 @@ function generateJWTToken(user) {
                _id: user.role_id._id,
                title: user.role_id.title,
                level: user.role_id.level,
+               permissions: user.role_id?.permissions,
             }
          },
       },

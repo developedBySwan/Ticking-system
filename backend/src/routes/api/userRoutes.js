@@ -1,4 +1,5 @@
 import express from 'express';
+import authorize from "../../middlewares/permissionHandler.js";
 
 import userStoreValidation from '../../middlewares/User/userStoreValidation.js';
 import userLoginValidation from '../../middlewares/User/userLoginValidation.js';
@@ -35,6 +36,7 @@ userRouter.post(
 userRouter.get(
     '/user-list',
     validateTokenHandler,
+    authorize('user-list'),
     userList,
 )
 

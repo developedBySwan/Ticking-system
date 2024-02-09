@@ -12,9 +12,20 @@ import { response } from "../helpers/helper.js";
 const ticketList = asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+
+    const { title } = req.query;
+
+    const filter = {};
+
+    if (title) {
+        filter.title = { $regex: title, $options: 'i' }
+    }
     
     const tickets = await Ticket
-        .find()
+        .find(filter)
+        .where({
+            'approved_step' : req.user.role.level,
+        })
         .skip((page - 1) * limit)
         .limit(limit);
     

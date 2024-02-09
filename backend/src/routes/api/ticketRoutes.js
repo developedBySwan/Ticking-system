@@ -2,18 +2,24 @@ import express from 'express';
 
 import { ticketDelete, ticketList, ticketStore, ticketUpdate } from '../../controllers/ticketController.js';
 import ticketStoreValidation from "../../middlewares/Ticket/ticketStoreValidation.js";
+import authorize from "../../middlewares/permissionHandler.js";
+import validateTokenHandler from '../../middlewares/validateTokenHandler.js';
 
 const ticketRouter = express.Router();
+
+ticketRouter.use(validateTokenHandler);
 
 ticketRouter
     .get(
         '/list',
+        authorize('ticket-list'),
         ticketList
     )
     
 ticketRouter
     .post(
         '/store',
+        authorize('ticket-store'),
         ticketStoreValidation,
         ticketStore
     )
@@ -21,6 +27,7 @@ ticketRouter
 ticketRouter
     .put(
         '/update/:id',
+        authorize('ticket-update'),
         ticketStoreValidation,
         ticketUpdate,
 )
@@ -28,6 +35,7 @@ ticketRouter
 ticketRouter
     .delete(
         '/delete/:id',
+        authorize('ticket-delete'),
         ticketDelete,
     )
 

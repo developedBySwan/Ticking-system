@@ -104,9 +104,9 @@ const ticketAdjust = asyncHandler(async (req, res) => {
     const ticketId = req.params.id;
 
     const ticket = await Ticket.findById(ticketId)
-                // .where({
-                //     'approved_step' : req.user.role.level - 1,
-                // })
+                .where({
+                    'approved_step' : req.user.role.level - 1,
+                })
                 .exec();
 
     if (!ticket) {

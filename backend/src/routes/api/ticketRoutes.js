@@ -42,7 +42,7 @@ ticketRouter
 ticketRouter
     .put(
         '/adjust/:id',
-        // authorize('ticket-adjust'),
+        authorize('ticket-adjust'),
         ticketAdjust
     )
 

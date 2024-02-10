@@ -185,7 +185,7 @@ function generateJWTToken(user) {
       user: {
         username: user.username,
         phone: user.phone,
-        id: user.id,
+        _id: user.id,
         role: {
           _id: user.role_id._id,
           title: user.role_id.title,

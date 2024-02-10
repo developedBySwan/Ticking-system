@@ -9,6 +9,7 @@ import userRouter from "./routes/api/userRoutes.js";
 import roleRouter from "./routes/api/roleRoutes.js";
 
 import corsOption from "./configs/corsOptions.js";
+import logRouter from "./routes/api/logRoutes.js";
 
 const port = 8000;
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use("/api/ticket", ticketRouter);
 app.use("/api/user", userRouter);
 app.use("/api/role", roleRouter);
+app.use("/api/log", logRouter);
 
 app.all("*", (req, res) => {
   return res.status(404).json({

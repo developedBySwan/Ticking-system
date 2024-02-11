@@ -112,7 +112,7 @@ const ticketAdjust = asyncHandler(async (req, res) => {
     return response(res, "Ticket not found", 404);
   }
 
-  const { is_approve } = req.body;
+  const { is_approve, reject_reason } = req.body;
 
   if (is_approve) {
     Ticket.findByIdAndUpdate(ticketId, {
@@ -127,6 +127,7 @@ const ticketAdjust = asyncHandler(async (req, res) => {
     return response(res, "Adjust Successfully", 200);
   } else {
     Ticket.findByIdAndUpdate(ticketId, {
+      deny_reason: reject_reason,
       approved_step: 0,
       is_finished: false,
     });

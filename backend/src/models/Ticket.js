@@ -7,6 +7,11 @@ const ticketSchema = new mongoose.Schema({
   description: { type: String, required: false },
   is_finished: { type: Boolean, required: true, default: false },
   approved_step: { type: Number },
+  submit_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  deny_reason: { type: String },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);
@@ -25,6 +30,7 @@ ticketSchema.pre("save", async function (next) {
 
     // Set the roleID to the ID of the lowest level role
     this.role_id = lowestLevelRole._id;
+    this.submit_by = req.user._id;
     next();
   } catch (error) {
     next(error);

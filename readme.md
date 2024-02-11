@@ -9,6 +9,7 @@
 5. [Frontend Folder Structure](#frontend-folder-structure)
 6. [Installation Instructions](#installation-instructions)
 7. [Usage Guidelines](#usage-guidelines)
+8. [Working In Progress](#working-in-progress)
 
 <!-- TOC --><a name="introduction"></a>
 
@@ -73,7 +74,7 @@ Under the src folder, the following structure is maintained:
 
 <!-- TOC --><a name="installation-instructions"></a>
 
-## Installtion Instructions
+## Installation Instructions
 
 ### For Backend
 
@@ -145,3 +146,17 @@ base_Url=<your_backend_api_endpoint_uri>
 ## Usage Guidelines
 
 To interact with the backend API endpoints, you can use the provided Postman API collection and environment.
+
+<!-- TOC --><a name="working-in-progress"></a>
+
+## Working In Progress
+
+### Backend Development
+
+- Status: All requirements have been implemented and are functional.
+
+### Frontend Development
+
+- Status: Currently, only Authentication and Authorization functionalities have been completed.
+
+I am working on expanding the frontend functionalities to include additional features and enhancements.

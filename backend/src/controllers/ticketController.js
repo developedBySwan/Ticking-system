@@ -126,7 +126,10 @@ const ticketAdjust = asyncHandler(async (req, res) => {
 
     return response(res, "Adjust Successfully", 200);
   } else {
-    return response(res, "Is Approve Field is required", 422);
+    Ticket.findByIdAndUpdate(ticketId, {
+      approved_step: 0,
+      is_finished: false,
+    });
   }
 });
 

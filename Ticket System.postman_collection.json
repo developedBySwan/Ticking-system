@@ -1,0 +1,2148 @@
+{
+	"info": {
+		"_postman_id": "1479d4a8-d1ce-4f69-8a49-5bcbb68dde28",
+		"name": "Ticket System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25202844"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"testing\",\n    \"email\" : \"testing134ee@gmail.com\",\n    \"phone\" : \"09222224433\",\n    \"password\" : \"test\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testing\",\n    \"email\" : \"testing@email.com\",\n    \"phone\" : \"09785468585\",\n    \"password\" : \"secret\"\n}   ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/register",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "379"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17b-Wjv42HAa8Gq1QACHmYjZdLJ92+Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 08 Feb 2024 16:57:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User Create Successfully\",\n    \"user\": {\n        \"_id\": \"65c507f219d902cf08ceed0b\",\n        \"username\": \"testing\",\n        \"email\": \"testing@email.com\",\n        \"phone\": \"09785468585\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDk3ODU0Njg1ODUiLCJpZCI6IjY1YzUwN2YyMTlkOTAyY2YwOGNlZWQwYiJ9LCJpYXQiOjE3MDc0MTE0NDJ9.QyYxeixQhms9t2eGpH3dZSkshhpctBfxBQ2eR1hTRmA\"\n    }\n}"
+						},
+						{
+							"name": "Validation Error message",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testing\",\n    \"email\" : \"testing@email.com\",\n    \"phone\" : \"09785468585\",\n    \"password\" : \"\"\n}   ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/register",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-B/eldhXuVS0hIUMVpYWqiof7kpw\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 08 Feb 2024 16:59:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"All Fields are required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\" : \"09222222222\",\n    \"password\" : \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login success response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"phone\" : \"09222222222\",\n    \"password\" : \"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "382"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17e-mWE4POZ8s9tuRUd+Q2wzLsLr9a8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 08 Feb 2024 19:42:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User Login Successfully\",\n    \"user\": {\n        \"_id\": \"65c52e9893a26ef46154948a\",\n        \"username\": \"testing\",\n        \"email\": \"testing4243@gmail.com\",\n        \"phone\": \"09222222222\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0MjEzNDF9.T1Io6GR4beLKuQmmyaR2Z5FhT_TItFgxxYJJkPHwG3E\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}/user/update/65c63d5f542107c8532428f1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"update",
+								"65c63d5f542107c8532428f1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Successful response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"testing\",\n    \"email\" : \"testing4243@gmail.com\",\n    \"phone\" : \"09222222222\",\n    \"password\" : \"test\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/update/65c52e9893a26ef46154948a",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"update",
+										"65c52e9893a26ef46154948a"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-xQp/RT/B83FVmL1vMh80ECFCIcc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 08 Feb 2024 20:05:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Updated Successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVFQiLCJwaG9uZSI6IjA5MjIyMjIyMjIyIiwiaWQiOiI2NWM2M2Q1ZjU0MjEwN2M4NTMyNDI4ZjEiLCJyb2xlIjp7Il9pZCI6IjY1YzY3ZGRkZmYzMjVkYThiYmQ3MDFiOSIsInRpdGxlIjoiTWFuYWdlciBTaXgiLCJsZXZlbCI6OCwicGVybWlzc2lvbnMiOlsidXNlci1saXN0Il19fSwiaWF0IjoxNzA3NTA5NjcwfQ.wk3KqHzLrHBiJMhPDZYEgCOsy87LCzi5Mm7j7aeOLr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user/user-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"user-list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/user/user-list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"user-list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "405"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"195-QzNtvbr7QDGTEoc/p9FgNsNPxdk\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 15:22:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"_id\": \"65c63d5f542107c8532428f1\",\n            \"username\": \"testing\",\n            \"mail\": \"testing4243@gmail.com\",\n            \"phone\": \"09222222222\",\n            \"role\": {\n                \"_id\": \"65c626ebd976185e0bb108f0\",\n                \"title\": \"Manager\",\n                \"level\": 2\n            }\n        },\n        {\n            \"_id\": \"65c6402a75cec1125905e813\",\n            \"username\": \"testing\",\n            \"mail\": \"testing34@gmail.com\",\n            \"phone\": \"09222222221\",\n            \"role\": {\n                \"_id\": \"65c626ebd976185e0bb108f0\",\n                \"title\": \"Manager\",\n                \"level\": 2\n            }\n        }\n    ],\n    \"currentPage\": 1,\n    \"perPage\": 10,\n    \"total\": 2\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Role List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Role List simple response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/role/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "227"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e3-wDO5oarivcok3N/43evpMXcWom0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:23:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"65c6268f81459c05893777bb\",\n            \"title\": \"staff\",\n            \"description\": \"description\",\n            \"level\": 1\n        },\n        {\n            \"id\": \"65c626ebd976185e0bb108f0\",\n            \"title\": \"Manager\",\n            \"description\": \"description\",\n            \"level\": 2\n        }\n    ],\n    \"currentPage\": 1,\n    \"perPage\": 10,\n    \"total\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "Role Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Manager Six\",\n    \"description\" : \"description\",\n    \"level\" : \"8\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/store",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"store"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Role Create Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Manager\",\n    \"description\" : \"description\",\n    \"level\" : \"2\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"store"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-wXeV6OARLgylfg/otktSh24o8Vw\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:21:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Role Created Successfully\"\n}"
+						},
+						{
+							"name": "level already exist validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Manager\",\n    \"description\" : \"description\",\n    \"level\" : \"2\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"store"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-Y8bkIYNFacopinM/ymsSS9F7PkY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:22:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Level already exists\"\n}"
+						},
+						{
+							"name": "Title Already exist validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Manager\",\n    \"description\" : \"description\",\n    \"level\" : \"3\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"store"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-6gjlwQUu2mY+I032bZ+T+G4RlPI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:22:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Title already exists\"\n}"
+						},
+						{
+							"name": "Title Filed required validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"\",\n    \"description\" : \"description\",\n    \"level\" : \"3\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"store"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-hq//qPeYkSCXU21LkVNeOiewErI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:22:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Title filed is required\"\n}"
+						},
+						{
+							"name": "role filed required validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Manager\",\n    \"description\" : \"description\",\n    \"level\" : \"\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"store"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-62/9NJTn/23pDctqHxGRqV5wQJc\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 13:23:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Level filed is required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Role Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"HR\",\n    \"description\" : \"description\",\n    \"level\" : \"2\",\n    \"permissions\" : [\n        \"user-list\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/role/update/65c6268f81459c05893777bb",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"update",
+								"65c6268f81459c05893777bb"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Successfully",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"HR\",\n    \"description\" : \"description\",\n    \"level\" : \"4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/update/65c6268f81459c05893777bb",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"update",
+										"65c6268f81459c05893777bb"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21-LoCKm3KPmaezPWRMy/5WARPiM14\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 14:29:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Update Successfully\"\n}"
+						},
+						{
+							"name": "Job Title Already Exist validation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Manager\",\n    \"description\" : \"description\",\n    \"level\" : \"4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/update/65c6268f81459c05893777bb",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"update",
+										"65c6268f81459c05893777bb"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26-3vW6XYQRwTUqT3NtLqWrxDSCdHI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 14:29:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Job Title already exists\"\n}"
+						},
+						{
+							"name": "Level Already Exist validation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"HR\",\n    \"description\" : \"description\",\n    \"level\" : \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/role/update/65c6268f81459c05893777bb",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"update",
+										"65c6268f81459c05893777bb"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"22-Y8bkIYNFacopinM/ymsSS9F7PkY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 14:30:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Level already exists\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Role Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/delete/65c6268f81459c05893777bb",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"delete",
+								"65c6268f81459c05893777bb"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Role Delete Successfully",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/role/delete/65c6268f81459c05893777bb",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"delete",
+										"65c6268f81459c05893777bb"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-DL0OAYf2/wBOoar7iT5b2368kjE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 14:38:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Update Delete\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Permission LIst",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/permission-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"permission-list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Permission LIst Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/role/permission-list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"permission-list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d4-r+b/TGVzzE3JszqeRRphftLQv+A\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 19:11:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        \"user-list\",\n        \"user-store\",\n        \"user-update\",\n        \"user-delete\",\n        \"ticket-list\",\n        \"ticket-store\",\n        \"ticket-update\",\n        \"ticket-delete\",\n        \"ticket-approve\",\n        \"role-list\",\n        \"role-store\",\n        \"role-update\",\n        \"role-delete\",\n        \"permission-list\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Role Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/role/detail/65c67dddff325da8bbd701b9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"role",
+								"detail",
+								"65c67dddff325da8bbd701b9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Role Detail Api response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/role/detail/65c67dddff325da8bbd701b9",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"role",
+										"detail",
+										"65c67dddff325da8bbd701b9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"82-PwQaxv+nqVoQ7OmfRznOyAgvlJA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 19:50:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"65c67dddff325da8bbd701b9\",\n        \"title\": \"Manager Six\",\n        \"description\": \"description\",\n        \"level\": 8,\n        \"permissions\": [\n            \"user-list\"\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "Ticket list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVFQiLCJwaG9uZSI6IjA5MjIyMjIyMjIyIiwiaWQiOiI2NWM2M2Q1ZjU0MjEwN2M4NTMyNDI4ZjEiLCJyb2xlIjp7Il9pZCI6IjY1YzY3ZGRkZmYzMjVkYThiYmQ3MDFiOSIsInRpdGxlIjoiTWFuYWdlciBTaXgiLCJsZXZlbCI6OCwicGVybWlzc2lvbnMiOlsidXNlci1saXN0Il19fSwiaWF0IjoxNzA3NTA5NjcwfQ.wk3KqHzLrHBiJMhPDZYEgCOsy87LCzi5Mm7j7aeOLr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ticket/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ticket",
+								"list"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ticket Response list add",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/ticket/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ticket",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1mfoFePo6rlFc4oN1hUi/CZ6tYs\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 17:21:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"_id\": \"65c659239acf331fe0912a0b\",\n            \"title\": \"Title\",\n            \"is_finished\": false\n        }\n    ],\n    \"currentPage\": 1,\n    \"perPage\": 10,\n    \"total\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Ticket Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVFQiLCJwaG9uZSI6IjA5MjIyMjIyMjIyIiwiX2lkIjoiNjVjNjNkNWY1NDIxMDdjODUzMjQyOGYxIiwicm9sZSI6eyJfaWQiOiI2NWM2N2RkZGZmMzI1ZGE4YmJkNzAxYjkiLCJ0aXRsZSI6Ik1hbmFnZXIgU2l4IiwibGV2ZWwiOjgsInBlcm1pc3Npb25zIjpbInVzZXItbGlzdCJdfX0sImlhdCI6MTcwNzU4MDgyN30.jkSDpBXoM7QtdwzKnok8KnWRxGfW_TIg3QYYwU_P30Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"this is title\",\n    \"description\" : \"this is des\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ticket/store",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ticket",
+								"store"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ticket Store Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"Title\",\n    \"description\" : \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/ticket/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ticket",
+										"store"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-WaOkKC9dyVb1YysbLd0MzXsqkE4\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 16:56:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Ticket Store Successfully\"\n}"
+						},
+						{
+							"name": "Title Field Required response example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"\",\n    \"description\" : \"this is des\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/ticket/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ticket",
+										"store"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-hq//qPeYkSCXU21LkVNeOiewErI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 16:57:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Title filed is required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Ticket Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"this is title\",\n    \"description\" : \"this is des\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ticket/update/65c659239acf331fe0912a0b",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ticket",
+								"update",
+								"65c659239acf331fe0912a0b"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ticket Update Success Respones",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\" : \"this is title\",\n    \"description\" : \"this is des\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/ticket/update/65c659239acf331fe0912a0b",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ticket",
+										"update",
+										"65c659239acf331fe0912a0b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-WaOkKC9dyVb1YysbLd0MzXsqkE4\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 17:31:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Ticket Store Successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Ticket Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdGluZyIsInBob25lIjoiMDkyMjIyMjIyMjIiLCJpZCI6IjY1YzUyZTk4OTNhMjZlZjQ2MTU0OTQ4YSJ9LCJpYXQiOjE3MDc0NTMxMTh9.1xptNlLywFGx5SKda5kOO6NgJKOkQnfk3zqKhHcebkc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/ticket/delete/65c6620e34fc892857dad85c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ticket",
+								"delete",
+								"65c6620e34fc892857dad85c"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ticket Delete Success Respones",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/ticket/delete/65c6620e34fc892857dad85c",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"ticket",
+										"delete",
+										"65c6620e34fc892857dad85c"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-RbYrmhkhMWzuG4qV7Z3+HwGQw9E\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Feb 2024 17:34:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Ticket Deleted Successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Ticket Adject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_approve\" : true,\n    \"reject_reason\" : \"reason\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/ticket/adjust/65c68c4228522205fbb491b8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ticket",
+								"adjust",
+								"65c68c4228522205fbb491b8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Role list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/log/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"log",
+								"list"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Role list Simple Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/log/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"log",
+										"list"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1177"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"499-XIVks3gkDLS7Ttd+SxCh73sJSzU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 10 Feb 2024 16:59:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"_user_id\": \"65c63d5f542107c8532428f1\",\n            \"ip\": \"::1\",\n            \"method\": \"POST\",\n            \"url\": \"/store\",\n            \"statusCode\": 200,\n            \"model\": \"Ticket\",\n            \"action\": \"CREATE\",\n            \"sanitizedData\": {\n                \"body\": {\n                    \"title\": \"this is title\",\n                    \"description\": \"this is des\"\n                }\n            },\n            \"meta\": {\n                \"userAgent\": \"PostmanRuntime/7.36.1\"\n            }\n        },\n        {\n            \"_user_id\": \"::1\",\n            \"ip\": \"::1\",\n            \"method\": \"POST\",\n            \"url\": \"/login\",\n            \"statusCode\": 200,\n            \"model\": \"User\",\n            \"action\": \"CREATE\",\n            \"sanitizedData\": {\n                \"body\": {\n                    \"phone\": \"09222222222\"\n                }\n            },\n            \"meta\": {\n                \"userAgent\": \"PostmanRuntime/7.36.1\"\n            }\n        },\n        {\n            \"_user_id\": \"::1\",\n            \"ip\": \"::1\",\n            \"method\": \"POST\",\n            \"url\": \"/login\",\n            \"statusCode\": 200,\n            \"model\": \"User\",\n            \"action\": \"CREATE\",\n            \"sanitizedData\": {\n                \"body\": {\n                    \"phone\": \"09222222222\"\n                }\n            },\n            \"meta\": {\n                \"userAgent\": \"PostmanRuntime/7.36.1\"\n            }\n        },\n        {\n            \"_user_id\": \"::1\",\n            \"ip\": \"::1\",\n            \"method\": \"POST\",\n            \"url\": \"/register\",\n            \"statusCode\": 200,\n            \"model\": \"User\",\n            \"action\": \"CREATE\",\n            \"sanitizedData\": {\n                \"body\": {\n                    \"username\": \"testing\",\n                    \"email\": \"testing134ee@gmail.com\",\n                    \"phone\": \"09222224433\"\n                }\n            },\n            \"meta\": {\n                \"userAgent\": \"PostmanRuntime/7.36.1\"\n            }\n        },\n        {\n            \"_user_id\": \"::1\",\n            \"ip\": \"::1\",\n            \"method\": \"POST\",\n            \"url\": \"/login\",\n            \"statusCode\": 200,\n            \"model\": \"User\",\n            \"action\": \"CREATE\",\n            \"sanitizedData\": {\n                \"body\": {\n                    \"phone\": \"09222222222\"\n                }\n            },\n            \"meta\": {\n                \"userAgent\": \"PostmanRuntime/7.36.1\"\n            }\n        }\n    ],\n    \"page\": 1,\n    \"perPage\": 10,\n    \"total\": 5\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

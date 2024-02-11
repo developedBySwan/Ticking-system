@@ -36,7 +36,13 @@ function response(res, message, code = 200) {
   return res.status(code).json({ message: message });
 }
 
-async function storeActivityLog(req, res, model) {
+async function storeActivityLog(
+  req,
+  res,
+  model,
+  newData = null,
+  oldData = null
+) {
   let sanitizedData = {};
   // Sanitize sensitive data based on requirements and privacy concerns
   if (req.body) {
@@ -48,16 +54,16 @@ async function storeActivityLog(req, res, model) {
   const action = getActionFromRequest(req);
 
   const logEntry = {
-    userId: req.user ? req.user._id : req.ip,
-    ip: req.ip,
+    userId: req.user ? req.user._id : req.socket.remoteAddress,
+    ip: req.socket.remoteAddress,
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
     model,
     action,
-    // Add modified fields, new/deleted data if applicable
+    newData: newData,
+    olData: oldData,
     sanitizedData,
-    // Add additional context-specific data if needed
     meta: {
       sessionID: req.sessionID,
       referrer: req.headers.referer,

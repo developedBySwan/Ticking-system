@@ -140,37 +140,33 @@ const userList = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
-  try {
-    const users = await User.find()
-      .populate("role_id")
-      .skip((page - 1) * limit)
-      .limit(limit);
+  const users = await User.find()
+    .populate("role_id")
+    .skip((page - 1) * limit)
+    .limit(limit);
 
-    const userCount = await User.countDocuments();
+  const userCount = await User.countDocuments();
 
-    const transformedUsers = users.map((user) => {
-      return {
-        _id: user.id,
-        username: user.username,
-        mail: user.email,
-        phone: user.phone,
-        role: {
-          _id: user.role_id?._id,
-          title: user.role_id?.title,
-          level: user.role_id?.level,
-        },
-      };
-    });
+  const transformedUsers = users.map((user) => {
+    return {
+      _id: user.id,
+      username: user.username,
+      mail: user.email,
+      phone: user.phone,
+      role: {
+        _id: user.role_id?._id,
+        title: user.role_id?.title,
+        level: user.role_id?.level,
+      },
+    };
+  });
 
-    return res.status(200).json({
-      data: transformedUsers,
-      currentPage: page,
-      perPage: limit,
-      total: userCount,
-    });
-  } catch (err) {
-    response(res, "Internal Server Error", 500);
-  }
+  return res.status(200).json({
+    data: transformedUsers,
+    currentPage: page,
+    perPage: limit,
+    total: userCount,
+  });
 });
 
 /**

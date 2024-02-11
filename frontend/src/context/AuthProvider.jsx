@@ -1,24 +1,21 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
-  const [token, setToken] = useState("");
+  const navigate = useNavigate();
+  const getUserAuth = JSON.parse(localStorage.getItem("jwtToken"));
+  const [auth, setAuth] = useState(getUserAuth || null);
+  console.log("auth info", auth);
 
-  const handleAuth = (token) => {
-    setToken(token);
-    localStorage.setItem("jwtToken", JSON.stringify(token));
-  };
   const value = {
     auth,
     setAuth,
-    token,
-    setToken,
-    handleAuth,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

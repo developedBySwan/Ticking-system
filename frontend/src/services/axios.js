@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 import axios from "axios";
 
-const base_Url = process.env.base_Url;
+const base_Url = "http://localhost:8000/api";
 
-export default axios.create({
+export const axiosInstance = axios.create({
   baseURL: base_Url,
 });
 

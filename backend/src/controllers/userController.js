@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 
+import permissions from "../configs/permissions.js";
+
 import User from "../models/User.js";
 import { response, storeActivityLog } from "../helpers/helper.js";
 import Role from "../models/Role.js";
@@ -83,13 +85,14 @@ const loginUser = asyncHandler(async (req, res) => {
           _id: user.role_id._id,
           title: user.role_id.title,
           level: user.role_id.level,
-          permissions: user.role_id.permissions,
+          // permissions: user.role_id.permissions,
+          permissions: permissions,
         },
         token: generateJWTToken(user),
       },
     });
   } else {
-    response(res, "User Not Found", 422);
+    response(res, "User Not Found", 401);
   }
 });
 

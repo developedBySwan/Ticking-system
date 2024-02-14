@@ -1,4 +1,5 @@
 import ActivityLog from "../models/ActivityLog.js";
+import { validationResult } from "express-validator";
 
 /**
  * @des Check Value is number
@@ -90,4 +91,19 @@ function getActionFromRequest(req) {
   }
 }
 
-export { isNumber, isValidMail, response, storeActivityLog };
+function validationErrorThrow() {
+  return (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else next();
+  };
+}
+
+export {
+  isNumber,
+  isValidMail,
+  response,
+  storeActivityLog,
+  validationErrorThrow,
+};

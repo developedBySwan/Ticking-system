@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
+import { validationResult } from "express-validator";
 
 import permissions from "../configs/permissions.js";
 

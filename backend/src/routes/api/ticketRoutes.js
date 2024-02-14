@@ -7,9 +7,9 @@ import {
   ticketUpdate,
   ticketAdjust,
 } from "../../controllers/ticketController.js";
-import ticketStoreValidation from "../../middlewares/Ticket/ticketStoreValidation.js";
 import authorize from "../../middlewares/permissionHandler.js";
 import validateTokenHandler from "../../middlewares/validateTokenHandler.js";
+import { storeTicketValidation } from "../../validation/ticketValidation.js";
 
 const ticketRouter = express.Router();
 
@@ -20,14 +20,14 @@ ticketRouter.get("/list", authorize("ticket-list"), ticketList);
 ticketRouter.post(
   "/store",
   authorize("ticket-store"),
-  ticketStoreValidation,
+  storeTicketValidation,
   ticketStore
 );
 
 ticketRouter.put(
   "/update/:id",
   authorize("ticket-update"),
-  ticketStoreValidation,
+  storeTicketValidation,
   ticketUpdate
 );
 

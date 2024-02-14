@@ -34,6 +34,7 @@ The project revolves around a Step-By-Step Ticket Approving System. Users at the
 - **jsonwebtoken** : Generating and verifying JSON Web Tokens for user authentication.
 - **mongoose** : Object Data Modeling (ODM) library for MongoDB and Node.js.
 - **nodemon** : Automatically restarting the Node.js application upon file changes during development.
+- **express-validator** : Validation for request
 
 <!-- TOC --><a name="frontend-packages"></a>
 

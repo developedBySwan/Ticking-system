@@ -1,6 +1,7 @@
 import express from "express";
 
 import validateTokenHandler from "../../middlewares/validateTokenHandler.js";
+import { storeRole } from "../../validation/roleValidation.js";
 
 import {
   roleList,
@@ -10,7 +11,6 @@ import {
   permissionList,
   roleDetail,
 } from "../../controllers/roleController.js";
-import roleStoreValidation from "../../middlewares/Role/roleStoreValidation.js";
 import authorize from "../../middlewares/permissionHandler.js";
 
 const roleRouter = express.Router();
@@ -19,19 +19,9 @@ roleRouter.use(validateTokenHandler);
 
 roleRouter.get("/list", authorize("role-list"), roleList);
 
-roleRouter.post(
-  "/store",
-  authorize("role-store"),
-  roleStoreValidation,
-  roleStore
-);
+roleRouter.post("/store", authorize("role-store"), storeRole, roleStore);
 
-roleRouter.put(
-  "/update/:id",
-  authorize("role-update"),
-  roleStoreValidation,
-  roleUpdate
-);
+roleRouter.put("/update/:id", authorize("role-update"), storeRole, roleUpdate);
 
 roleRouter.delete("/delete/:id", authorize("role-delete"), roleDelete);
 

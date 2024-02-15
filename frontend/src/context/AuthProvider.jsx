@@ -11,11 +11,16 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const getUserAuth = JSON.parse(localStorage.getItem("jwtToken"));
   const [auth, setAuth] = useState(getUserAuth || null);
-  console.log("auth info", auth);
+
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+    navigate("/login");
+  };
 
   const value = {
     auth,
     setAuth,
+    logout,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

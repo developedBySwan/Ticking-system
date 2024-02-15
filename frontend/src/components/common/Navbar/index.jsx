@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { navLinks } from "../../../constant";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../context/AuthProvider";
 
 export const NavBar = () => {
-  let isLoggedin = true;
-  const userPermissions = ["permission.user", "permission.role"];
-  const filterNavs = navLinks.filter((route) =>
-    userPermissions.includes(route.permission)
+  const { auth, logout } = useAuth();
+  const filterNavs = navLinks.filter((role) =>
+    auth?.role?.permissions?.includes(role.permission)
   );
   return (
     <>
@@ -14,14 +15,20 @@ export const NavBar = () => {
         <ul className="flex">
           {filterNavs?.map((nav) => (
             <li className="mr-6" key={nav.id}>
-              <a className="text-blue-500 hover:text-blue-800" href={nav.url}>
+              <Link
+                className="text-blue-500 hover:text-blue-800"
+                href={nav.url}
+              >
                 {nav.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
-        {isLoggedin && (
-          <button className="px-4 py-2 rounded-lg bg-red-500 text-white">
+        {auth?.token && (
+          <button
+            onClick={logout}
+            className="px-4 py-2 rounded-lg bg-red-500 text-white"
+          >
             Log out
           </button>
         )}

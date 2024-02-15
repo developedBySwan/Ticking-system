@@ -13,15 +13,17 @@ const Login = () => {
     error,
     fetchData,
   } = useAxiosFetch(axiosInstance);
-  const { setAuth } = useAuth();
-  console.log("first", resData);
+  const { setAuth, auth } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     resData && localStorage.setItem("jwtToken", JSON.stringify(resData?.user));
-    resData && navigate("/ticket");
-  }, [resData]);
+    const getUserAuth = JSON.parse(localStorage.getItem("jwtToken"));
+    setAuth(getUserAuth);
+    console.log("auth info", auth);
+    resData?.message === "User Login Successfully" && navigate("/ticket");
+  }, [resData, navigate]);
 
-  const navigate = useNavigate();
   const defaultValues = {
     phNumber: "",
     password: "",

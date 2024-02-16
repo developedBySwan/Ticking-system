@@ -7,6 +7,7 @@ import permissions from "../configs/permissions.js";
 import User from "../models/User.js";
 import { response, storeActivityLog } from "../helpers/helper.js";
 import Role from "../models/Role.js";
+import BlockList from "../models/BlockList.js";
 
 /**
  * @desc Register user
@@ -209,6 +210,24 @@ const userList = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @des user logout
+ *
+ * @access private user-logout
+ */
+const userLogout = asyncHandler(async (req, res) => {
+  let authHeader = req.headers.Authorization || req.headers.authorization;
+  let token = authHeader.split(" ")[1];
+
+  const newBlacklist = new BlockList({
+    token: token,
+  });
+
+  await newBlacklist.save();
+
+  return response(res, "Logout Successfully", 200);
+});
+
+/**
  * @des to generate JWT token
  *
  * @param { User } user
@@ -233,4 +252,4 @@ function generateJWTToken(user) {
   );
 }
 
-export { registerUser, loginUser, updateUser, userList };
+export { registerUser, loginUser, updateUser, userList, userLogout };

@@ -8,6 +8,7 @@ import {
   loginUser,
   updateUser,
   userList,
+  userLogout,
 } from "../../controllers/userController.js";
 import {
   loginValidation,
@@ -33,5 +34,7 @@ userRouter.get(
   authorize("user-list"),
   userList
 );
+
+userRouter.post("/logout", validateTokenHandler, userLogout);
 
 export default userRouter;

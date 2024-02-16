@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { response } from "../helpers/helper.js";
+import BlockList from "../models/BlockList.js";
 
 export default asyncHandler(async (req, res, next) => {
   let token;
@@ -15,15 +16,25 @@ export default asyncHandler(async (req, res, next) => {
       return response(res, "User is not authorized", 401);
     }
 
-    return jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, decoded) => {
-      if (err) {
-        return response(res, "User is not authorized", 401);
+    return jwt.verify(
+      token,
+      process.env.JWT_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          return response(res, "User is not authorized", 401);
+        }
+
+        const blockList = await BlockList.findOne({ token: token });
+
+        if (blockList) {
+          return response(res, "User is not authorized", 401);
+        }
+
+        req.user = decoded.user;
+
+        next();
       }
-
-      req.user = decoded.user;
-
-      next();
-    });
+    );
   }
 
   return response(res, "User is not authorized", 401);

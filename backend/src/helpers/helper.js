@@ -37,6 +37,15 @@ function response(res, message, code = 200) {
   return res.status(code).json({ message: message });
 }
 
+/**
+ * @des to Store data to activity log
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {String} model
+ * @param {Object} newData
+ * @param {Object} oldData
+ */
 async function storeActivityLog(
   req,
   res,
@@ -63,7 +72,7 @@ async function storeActivityLog(
     model,
     action,
     newData: newData,
-    olData: oldData,
+    oldData: oldData,
     sanitizedData,
     meta: {
       sessionID: req.sessionID,

@@ -55,11 +55,29 @@ const roleList = asyncHandler(async (req, res) => {
  * @access private
  */
 const roleStore = asyncHandler(async (req, res) => {
-  await Role.create(req.body);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  await storeActivityLog(req, res, "Ticket");
+  try {
+    await Role.create(req.body);
 
-  response(res, "Role Created Successfully", 200);
+    await storeActivityLog(req, res, "Ticket");
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, "Role Created Successfully", 200);
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
+  }
 });
 
 /**
@@ -95,11 +113,29 @@ const roleDetail = asyncHandler(async (req, res) => {
  * @access private
  */
 const roleUpdate = asyncHandler(async (req, res) => {
-  await Role.findByIdAndUpdate(req.params.id, req.body);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  await storeActivityLog(req, res, "Ticket");
+  try {
+    await Role.findByIdAndUpdate(req.params.id, req.body);
 
-  response(res, "Update Successfully", 200);
+    await storeActivityLog(req, res, "Ticket");
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, "Update Successfully", 200);
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
+  }
 });
 
 /**

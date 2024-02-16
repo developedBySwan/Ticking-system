@@ -16,46 +16,64 @@ import Role from "../models/Role.js";
  * @access public
  */
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, phone, password } = req.body;
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  const checkUser = await User.findOne({
-    $or: [
-      { email: email },
-      { phone: phone }, // Assuming you have a phone field in your user model
-    ],
-  });
+  try {
+    const { username, email, phone, password } = req.body;
 
-  if (checkUser) {
-    return res.status(400).json({ message: "User Is Already Exists" });
-  }
-
-  const user = await User.create({
-    username,
-    email,
-    phone,
-    password: await bcrypt.hash(password, 10),
-  });
-
-  if (user) {
-    await storeActivityLog(req, res, "User");
-
-    return res.status(201).json({
-      message: "User Create Successfully",
-      user: {
-        _id: user.id,
-        username: user.username,
-        email: user.email,
-        phone: user.phone,
-        role: {
-          _id: user.role_id._id,
-          title: user.role_id.title,
-          level: user.role_id.level,
-        },
-        token: generateJWTToken(user),
-      },
+    const checkUser = await User.findOne({
+      $or: [
+        { email: email },
+        { phone: phone }, // Assuming you have a phone field in your user model
+      ],
     });
-  } else {
-    return response(res, "User is already exists", 400);
+
+    if (checkUser) {
+      return res.status(400).json({ message: "User Is Already Exists" });
+    }
+
+    const user = await User.create({
+      username,
+      email,
+      phone,
+      password: await bcrypt.hash(password, 10),
+    });
+
+    if (user) {
+      await storeActivityLog(req, res, "User");
+
+      await session.commitTransaction();
+      session.endSession();
+
+      return res.status(201).json({
+        message: "User Create Successfully",
+        user: {
+          _id: user.id,
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          role: {
+            _id: user.role_id._id,
+            title: user.role_id.title,
+            level: user.role_id.level,
+          },
+          token: generateJWTToken(user),
+        },
+      });
+    } else {
+      return response(res, "User is already exists", 400);
+    }
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
   }
 });
 
@@ -105,31 +123,49 @@ const loginUser = asyncHandler(async (req, res) => {
  *
  */
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  if (!user) {
-    return response(res, "User Not Found", 403);
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return response(res, "User Not Found", 403);
+    }
+
+    const { username, email, phone, password, role_id } = req.body;
+
+    const role = await Role.findById(role_id);
+
+    if (!role) {
+      return response(res, "Role Not Found", 403);
+    }
+
+    await User.findByIdAndUpdate(req.params.id, {
+      username,
+      email,
+      phone,
+      password: await bcrypt.hash(password, 10),
+      role_id: role_id,
+    });
+
+    await storeActivityLog(req, res, "User");
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, "Updated Successfully", 200);
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
   }
-
-  const { username, email, phone, password, role_id } = req.body;
-
-  const role = await Role.findById(role_id);
-
-  if (!role) {
-    return response(res, "Role Not Found", 403);
-  }
-
-  await User.findByIdAndUpdate(req.params.id, {
-    username,
-    email,
-    phone,
-    password: await bcrypt.hash(password, 10),
-    role_id: role_id,
-  });
-
-  await storeActivityLog(req, res, "User");
-
-  return response(res, "Updated Successfully", 200);
 });
 
 /**

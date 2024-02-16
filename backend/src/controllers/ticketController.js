@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import Ticket from "../models/Ticket.js";
 import { response, storeActivityLog } from "../helpers/helper.js";
 import Role from "../models/Role.js";
+import mongoose from "mongoose";
+import db from "../database/db.js";
 
 /**
  * @des Ticket list
@@ -23,9 +25,9 @@ const ticketList = asyncHandler(async (req, res) => {
   }
 
   const tickets = await Ticket.find(filter)
-    .where({
-      approved_step: req.user.role.level - 1,
-    })
+    // .where({
+    //   approved_step: req.user.role.level - 1,
+    // })
     .skip((page - 1) * limit)
     .limit(limit);
 
@@ -55,11 +57,29 @@ const ticketList = asyncHandler(async (req, res) => {
  * @access private
  */
 const ticketStore = asyncHandler(async (req, res) => {
-  await Ticket.create(req.body);
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  await storeActivityLog(req, res, "Ticket");
+  try {
+    await Ticket.create(req.body);
 
-  return response(res, "Ticket Store Successfully", 200);
+    await storeActivityLog(req, res, "Ticket", req.body);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, "Ticket Store Successfully", 200);
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
+  }
 });
 
 /**
@@ -70,10 +90,37 @@ const ticketStore = asyncHandler(async (req, res) => {
  * @access private
  */
 const ticketUpdate = asyncHandler(async (req, res) => {
-  await Ticket.findByIdAndUpdate(req.params.id, req.body);
-  await storeActivityLog(req, res, "Ticket");
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  return response(res, "Ticket Update Successfully", 200);
+  try {
+    const oldTicketData = await Ticket.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: false,
+      }
+    );
+
+    console.log("Old Ticket Data => " + oldTicketData);
+
+    await storeActivityLog(req, res, "Ticket", req.body, oldTicketData);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, "Ticket Store Successfully", 200);
+  } catch (error) {
+    // Abort the transaction and handle the error
+    await session.abortTransaction();
+    session.endSession();
+
+    // Log the error for debugging
+    console.error("Error storing ticket:", error);
+
+    // Send an appropriate error response
+    return response(res, "Failed to store ticket", 500);
+  }
 });
 
 /**

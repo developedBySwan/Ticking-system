@@ -20,7 +20,6 @@ const Login = () => {
     resData && localStorage.setItem("jwtToken", JSON.stringify(resData?.user));
     const getUserAuth = JSON.parse(localStorage.getItem("jwtToken"));
     setAuth(getUserAuth);
-    console.log("auth info", auth);
     resData?.message === "User Login Successfully" && navigate("/ticket");
   }, [resData, navigate]);
 

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import {
   Error404,
+  Home,
   Layout,
   Login,
   Register,
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="/" element={<Home />} />
+
         {/** private */}
         <Route element={<RequireAuth permission={[permission.user]} />}>
           <Route path="user" element={<UserTable />} />

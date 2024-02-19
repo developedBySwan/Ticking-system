@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Outlet } from "react-router-dom";
 import { NavBar } from "../components/common/Navbar";
 
